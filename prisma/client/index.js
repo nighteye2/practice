@@ -22,7 +22,7 @@ const {
   defineDmmfProperty,
   Public,
   getRuntime
-} = require('@prisma/client/runtime/library.js')
+} = require('./runtime/library.js')
 
 
 const Prisma = {}
@@ -114,7 +114,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\mysvelteapp\\node_modules\\@prisma\\client",
+      "value": "C:\\mysvelteapp\\prisma\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -127,19 +127,21 @@ const config = {
         "native": true
       }
     ],
-    "previewFeatures": []
+    "previewFeatures": [],
+    "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../.env"
   },
-  "relativePath": "../../../prisma",
+  "relativePath": "..",
   "clientVersion": "5.12.1",
   "engineVersion": "473ed3124229e22d881cb7addf559799debae1ab",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "sqlite",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -148,8 +150,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String @id @default(uuid())\n  username      String @unique\n  passwordHash  String\n  userAuthToken String @unique\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n}\n\n\n",
-  "inlineSchemaHash": "ae1549009de4666433e450f417135e421739b11e36f471b792d0db26bd8f483f",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../prisma/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String @id @default(uuid())\n  username      String @unique\n  passwordHash  String\n  userAuthToken String @unique\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n}\n\n\n",
+  "inlineSchemaHash": "1ffa340450800025d9782a27a17d901874e7c5c4f8a39e7ba9d36021cbb9a30e",
   "copyEngine": true
 }
 
@@ -158,8 +160,8 @@ const fs = require('fs')
 config.dirname = __dirname
 if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   const alternativePaths = [
-    "node_modules/.prisma/client",
-    ".prisma/client",
+    "prisma/client",
+    "client",
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
@@ -175,7 +177,7 @@ defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = undefined
 
 
-const { warnEnvConflicts } = require('@prisma/client/runtime/library.js')
+const { warnEnvConflicts } = require('./runtime/library.js')
 
 warnEnvConflicts({
     rootEnvPath: config.relativeEnvPaths.rootEnvPath && path.resolve(config.dirname, config.relativeEnvPaths.rootEnvPath),
@@ -188,7 +190,7 @@ Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "node_modules/.prisma/client/query_engine-windows.dll.node")
+path.join(process.cwd(), "prisma/client/query_engine-windows.dll.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "node_modules/.prisma/client/schema.prisma")
+path.join(process.cwd(), "prisma/client/schema.prisma")
